@@ -12,6 +12,13 @@ const request = extend({
     requestType: 'form'
 })
 
+export const formData = extend({
+    prefix: '/api',
+    timeout: 100000,
+    errorHandler,
+    requestType: 'form'
+})
+
 request.interceptors.request.use((url: string, opt: RequestOptionsInit) => {
     return {
         url,

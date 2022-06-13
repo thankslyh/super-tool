@@ -2,8 +2,8 @@ import { useState, ChangeEvent, useMemo, useCallback, useEffect } from 'react'
 import { Divider, Input, Button } from 'antd'
 import { PlusCircleTwoTone, MinusCircleTwoTone, CopyTwoTone, CheckOutlined } from '@ant-design/icons'
 
-import { useApi, useCopy } from '../../../../hooks'
-import { getWxFollowUrl } from '../../../../api/index'
+import { useApi, useCopy } from '@hooks/index'
+import { getWxFollowUrl } from '@api/index'
 
 import classes from './index.module.css'
 
@@ -28,7 +28,7 @@ export default function WxFollowLink() {
         urls[idx] = val
         setUrls([...urls])
     }
-    const plus = (idx) => {
+    const plus = () => {
         urls.push('')
         setUrls([...urls])
     }
@@ -37,7 +37,7 @@ export default function WxFollowLink() {
         copyFn(copyValue || '')
     }, [res.data])
 
-    const minus = (idx) => {
+    const minus = () => {
         urls.pop()
         setUrls([...urls])
     }
@@ -53,8 +53,8 @@ export default function WxFollowLink() {
                     onInput={((v: ChangeEvent<HTMLInputElement>) => onInput(v.target.value, idx))}
                     placeholder="请输入微信文章的https链接"
                 />
-                {(urls.length === idx + 1) && <PlusCircleTwoTone onClick={() => plus(idx)} />}
-                {(urls.length === idx + 1 && idx !== 0) && <MinusCircleTwoTone onClick={() => minus(idx)} />}
+                {(urls.length === idx + 1) && <PlusCircleTwoTone onClick={() => plus()} />}
+                {(urls.length === idx + 1 && idx !== 0) && <MinusCircleTwoTone onClick={() => minus()} />}
             </div>
         ))
     }, [urls])

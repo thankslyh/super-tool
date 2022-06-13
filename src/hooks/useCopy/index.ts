@@ -1,6 +1,6 @@
 import { useState, Dispatch, SetStateAction } from 'react'
 
-let targetDom = null
+let targetDom: HTMLTextAreaElement
 
 interface IReturn {
     success: boolean,
@@ -24,7 +24,7 @@ function useCopy(arg?: HTMLElement): IReturn {
     }
     arg.onclick = function () {
         const copyText = arg.getAttribute('copy-text')
-        const result = copy(copyText)
+        const result = copy(copyText || '')
         setSuccess(result)
     }
     return {
@@ -37,6 +37,7 @@ function useCopy(arg?: HTMLElement): IReturn {
 function copy(text: string) {
     if (!targetDom) {
         targetDom = document.createElement('textarea')
+        // @ts-ignore
         targetDom.style = `
             position: fixed;
             top: -1000px;
