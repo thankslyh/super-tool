@@ -100,7 +100,7 @@ const readFile = (blob: Blob) :Promise<ArrayBuffer> => {
     })
 }
 
-interface MyResult<T, U> extends Result<T, U> {
+interface MyResult<T, U extends any[]> extends Result<T, U> {
     cData: IFileChunkRes[]
 }
 
