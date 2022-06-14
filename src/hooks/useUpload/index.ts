@@ -1,6 +1,7 @@
+import { useRef } from 'react'
 import { useRequest } from 'ahooks';
 import SparkMD5 from 'spark-md5'
-import { Options } from 'ahooks/lib/useRequest/src/types';
+import { Options, Result } from 'ahooks/lib/useRequest/src/types';
 
 import OrderPromise from '@utils/orderPromise';
 
@@ -16,7 +17,11 @@ interface IFileChunk {
     size: number;
 }
 
-const fileSlice = (f: File, maxRange = M5) :Promise<IFileChunk[]> => {
+type FileSliceResult = {
+    result: IFileChunk[]
+    hash: string
+}
+const fileSlice = (f: File, maxRange = M5) :Promise<FileSliceResult> => {
     return new Promise((resolve, reject) => {
         const smd5ab = new SparkMD5.ArrayBuffer()
         let result: IFileChunk[] = []
@@ -31,7 +36,10 @@ const fileSlice = (f: File, maxRange = M5) :Promise<IFileChunk[]> => {
                     data: f,
                     size: f.size
                 })
-                resolve(result)
+                resolve({
+                    result,
+                    hash: smd5ab.end()
+                })
             })
         }
         const chunks = chunkSlice(f, maxRange)
@@ -49,7 +57,10 @@ const fileSlice = (f: File, maxRange = M5) :Promise<IFileChunk[]> => {
                 data: chunks[index].data,
                 size: blob.byteLength
             }))
-            resolve(result)
+            resolve({
+                result,
+                hash
+            })
         })
     })
 }
@@ -89,20 +100,42 @@ const readFile = (blob: Blob) :Promise<ArrayBuffer> => {
     })
 }
 
+interface MyResult<T, U> extends Result<T, U> {
+    cData: IFileChunkRes[]
+}
+
+export interface IFileChunkRes extends IFileChunk {
+    success?: boolean;
+}
 const useUpload = <T extends any, U extends any[]>(service: hook.Service<T, U>, opt: UploadOptions<T, U>) => {
-    const result = useRequest(service, opt)
-    const originRun = result.run
-    result.run = async (...args) => {
-        const data = await fileSlice(args[0])
-        data.forEach((d, index) => {
-            const fd = new FormData()
-            fd.append('filename', d.filename)
-            fd.append('fileHash', d.fileHash)
-            fd.append('data', d.data)
-            originRun(fd)
+    const resRef = useRef<IFileChunkRes[]>([])
+    const tmpRes = useRequest(service, opt) as MyResult<T, U>
+    const originRunAsync = tmpRes.runAsync
+    tmpRes.runAsync = async function (...args) {
+        return new Promise(async (resolve, reject) => {
+            const data = await fileSlice(args[0])
+            resRef.current = data.result as IFileChunkRes[]
+            const fns = data.result.map((d, index) => () => {
+                const fd = new FormData()
+                fd.append('filename', d.filename)
+                fd.append('fileHash', d.fileHash)
+                fd.append('data', d.data)
+                fd.append("size", String(d.size))
+                // @ts-ignore
+                return originRunAsync(fd)
+            })
+            const op = new OrderPromise(fns)
+            op.start().end((res) => {
+                resRef.current = data.result.map(item => ({...item, success: true}))
+                resolve({
+                    hash: data.hash,
+                    res
+                } as T)
+            })
         })
     }
-    return result
+    tmpRes.cData = resRef.current
+    return tmpRes
 }
 
 export default useUpload
