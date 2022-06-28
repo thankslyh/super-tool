@@ -1,0 +1,36 @@
+.post-side {
+    width: 100%;
+}
+
+.post-side header {
+    height: 50px;
+    line-height: 50px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.post-side ul li {
+    position: relative;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    text-indent: 18px;
+    cursor: pointer;
+    transition: all .2s linear;
+    cursor: pointer;
+}
+
+.post-side ul li:hover {
+    background: rgba(0, 0, 0, .1);
+}
+.post-side ul li:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    height: 60%;
+    background: #159957;
+    transform: translateY(-50%);
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+}
