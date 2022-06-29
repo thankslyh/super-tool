@@ -27,6 +27,7 @@ request.interceptors.request.use((url: string, opt: RequestOptionsInit) => {
 })
 
 request.interceptors.response.use((res: Response<any>['response'], opt: RequestOptionsInit) => {
+    console.log('res', res)
     return res
 })
 

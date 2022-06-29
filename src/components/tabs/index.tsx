@@ -1,4 +1,6 @@
-import { FunctionComponent } from 'react'
+import {FunctionComponent, useEffect, useMemo} from 'react'
+import useApi from '@hooks/useApi'
+import { getTags } from '@api/index'
 
 interface TabsProps {
     name: string;
@@ -8,11 +10,23 @@ interface TabsProps {
 import classes from './index.module.css'
 
 const Tabs: FunctionComponent<TabsProps> = (props) => {
+    const res = useApi(getTags, {
+        manual: true
+    })
+    useEffect(() => {
+        res.run()
+    }, [])
+
+    const tags = useMemo(() => {
+        return res.data?.data.map(tag => (
+            <div className={classes['tabs-item']} key={tag.id}>{ tag.name }</div>
+        ))
+    }, [res.data])
+    
     return (
         <div className={classes.tabs}>
             <div className={classes['tabs-content']}>
-                <div className={classes['tabs-item']}>Javascript</div>
-                <div className={classes['tabs-item']}>Golang</div>
+                { tags }
             </div>
         </div>
     )

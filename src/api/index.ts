@@ -5,3 +5,7 @@ export const getWxFollowUrl = (body: any) => request.post('/get-wx-follow-url/ba
 export const upload = (body: FormData) => formData.post('/file-upload', {data: body})
 
 export const mergeFile = (body: any) => request.post('/file-upload/merge', {data: body})
+
+export const getTags = () => request.get<api.TagList>('/tags/get')
+
+export const getPostById = (id: string) => request.get<api.Post>('/post/get', {params: {id}})
