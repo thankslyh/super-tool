@@ -2,14 +2,9 @@ import {FunctionComponent, useEffect, useMemo} from 'react'
 import useApi from '@hooks/useApi'
 import { getTags } from '@api/index'
 
-interface TabsProps {
-    name: string;
-    key: string;
-}
-
 import classes from './index.module.css'
 
-const Tabs: FunctionComponent<TabsProps> = (props) => {
+const Tabs: FunctionComponent = (props) => {
     const res = useApi(getTags, {
         manual: true
     })
@@ -22,7 +17,7 @@ const Tabs: FunctionComponent<TabsProps> = (props) => {
             <div className={classes['tabs-item']} key={tag.id}>{ tag.name }</div>
         ))
     }, [res.data])
-    
+
     return (
         <div className={classes.tabs}>
             <div className={classes['tabs-content']}>
