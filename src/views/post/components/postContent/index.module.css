@@ -6,6 +6,10 @@
     width: 80%;
     margin-bottom: 10px;
 }
+
+.post-content p {
+    margin-bottom: 12px;
+}
 .post-content pre {
     font-size: 14px;
 }

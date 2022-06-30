@@ -5,7 +5,7 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
+  font-size: 14px;
   --h-base-size: 30px
 }
 
@@ -14,25 +14,25 @@ code {
     monospace;
 }
 h1 {
-  font-size: 40px;
-}
-h2 {
-  font-size: 38px;
-}
-h2 {
   font-size: 36px;
 }
-h3 {
+h2 {
   font-size: 34px;
 }
-h4 {
+h2 {
   font-size: 32px;
 }
-h5 {
+h3 {
   font-size: 30px;
 }
-h6 {
+h4 {
   font-size: 28px;
+}
+h5 {
+  font-size: 26px;
+}
+h6 {
+  font-size: 24px;
 }
 
 ul, li, h1, h2, h3, h4, h5, h6 {

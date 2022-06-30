@@ -1,0 +1,11 @@
+.post-list {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding-top: 20px;
+}

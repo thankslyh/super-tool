@@ -9,3 +9,5 @@ export const mergeFile = (body: any) => request.post('/file-upload/merge', {data
 export const getTags = () => request.get<api.TagList>('/tags/get')
 
 export const getPostById = (id: string) => request.get<api.Post>('/post/get', {params: {id}})
+
+export const getPostList = (tagCode?: string) => request.get<api.PostList>('/post/list', {params: {tagCode}})

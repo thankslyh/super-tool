@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import App from '../App'
 import Home from '@views/home'
 import Post from '@views/post'
+import PostList from '@views/postList'
 
 import ToolIndex from '@views/toolIndex'
 import WxFollowLink from '@views/toolIndex/components/wxFollowLink'
@@ -17,6 +18,7 @@ export default function Root() {
                 <Route path="/" element={<App/>}>
                     <Route path="/" element={<Home/>} />
                     <Route path="/post" element={<Post/>}/>
+                    <Route path="/post/list" element={<PostList/>}/>
                 </Route>
                 <Route path="tool-index" element={<ToolIndex/>}>
                     <Route path="wx-follow-link" element={<WxFollowLink/>} />
