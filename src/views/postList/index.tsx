@@ -20,12 +20,11 @@ const PostList: FC<any> = () => {
 
     const tagItemContainer = useMemo(() => {
         return res.data?.data.map(post =>
-            <div onClick={() => navigate(`/post?id=${post.id}`)}>
-                <PostItem
-                    key={post.id}
-                    {...post}
-                />
-            </div>
+            <PostItem
+                key={post.id}
+                {...post}
+                onClick={() => navigate(`/post?id=${post.id}`)}
+            />
         )
     }, [res.data?.data])
     return (

@@ -13,6 +13,5 @@
   height: 100vh;
   box-sizing: border-box;
   padding-top: 50px;
-  display: flex;
   overflow-y: scroll;
 }
