@@ -9,6 +9,15 @@
 
 .post-content p {
     margin-bottom: 12px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.post-content p code {
+    padding: 1px 2px;
+    background: #fff5f5;
+    border-radius: 2px;
+    color: #159957;
 }
 .post-content pre {
     font-size: 14px;

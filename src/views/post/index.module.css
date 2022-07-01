@@ -12,6 +12,8 @@
     float: right;
     width: 200px;
     background: #fff;
+    position: sticky;
+    top: 0;
 }
 
 .post-title {
