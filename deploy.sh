@@ -2,7 +2,7 @@
 
 echo "-----------deploy start------------"
 git pull
-npm run build
+pnpm run build
 rm -rf ../thankslyh
 mv ./thankslyh ../
 echo "-----------deploy end------------"
